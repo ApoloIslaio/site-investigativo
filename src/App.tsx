@@ -9,8 +9,7 @@ const App = () => {
   const [ipAddress, setIPAddress] = useState('')
   const [latitude, setLatitude] = useState(0)
   const [longitude, setLongitude] = useState(0)
-  const [error, setError ] = useState('')
-  const [dataNow, setDataNow] = useState<Data>(0);
+  const [dataNow, setDataNow] = useState('');
   const [imgUrl, setImageUrl] = useState('')
   const webcamRef = useRef(null);
  
@@ -42,7 +41,7 @@ const App = () => {
 
   //get camera user 
   const capturePhoto = () => {
-    const imgSrc = webcamRef.current.getScreenshot()
+    const imgSrc:string = webcamRef.current.getScreenshot()
     console.log('Imagem capturada:', imgSrc);
     setImageUrl(imgSrc)
    }
@@ -62,10 +61,6 @@ const App = () => {
   }
 
 
-  useEffect(() => {
-     
-     
-  }, []);
 
   return (
     <>
