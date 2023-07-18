@@ -79,6 +79,9 @@ const App = () => {
         <p>Ip: {ipAddress}</p>
         <p>Localização: {latitude} {longitude}</p>
         <p>Data: { dataNow }</p>
+        <div className='container-hide'>
+
+        </div>
         
         <Webcam
           audio={false}

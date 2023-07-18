@@ -18,6 +18,14 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.container-hide{
+  background-color: #242424;
+  width: 100%;
+  height: 200px;
+  position: absolute;
+  index: 1000;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
