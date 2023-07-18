@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import { useRef, useState } from 'react'
 import './App.css'
 //import Camera from 'react-html5-camera-photo';
@@ -6,12 +9,12 @@ import Webcam from 'react-webcam';
 
 const App = () => {
 
-  const [ipAddress, setIPAddress] = useState('')
+  const [ipAddress, setIpAddress] = useState<string>('')
   const [latitude, setLatitude] = useState(0)
   const [longitude, setLongitude] = useState(0)
   const [dataNow, setDataNow] = useState('');
-  const [imgUrl, setImageUrl] = useState('')
-  const webcamRef = useRef(null);
+  const [imgUrl, setImageUrl] = useState<string>('')
+  const webcamRef = useRef<Webcam | null>(null);
  
   
   const geolocationAPI = navigator.geolocation;
@@ -20,7 +23,7 @@ const App = () => {
   function getIpAddress(){
     fetch('https://api.ipify.org?format=json')
       .then(response => response.json())
-      .then(data => setIPAddress(data.ip))
+      .then(data => setIpAddress(data.ip))
       .catch(error => console.log(error))
   }
 
@@ -41,9 +44,17 @@ const App = () => {
 
   //get camera user 
   const capturePhoto = () => {
-    const imgSrc:string = webcamRef.current.getScreenshot()
-    console.log('Imagem capturada:', imgSrc);
-    setImageUrl(imgSrc)
+    if(webcamRef.current !== null){
+      const imgSrc = webcamRef.current.getScreenshot()
+      if(imgSrc !== null){
+        setImageUrl(imgSrc)
+        console.log('Imagem capturada:', imgSrc);
+      }else{
+        console.log('img null')
+      }
+    } else{
+      console.log('webcamRef.current nulo')
+    }
    }
 
   // get files user
