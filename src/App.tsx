@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import './App.css'
 //import Camera from 'react-html5-camera-photo';
 //import 'react-html5-camera-photo/build/css/index.css';
@@ -27,14 +27,14 @@ const App = () => {
   //latitude e longitude
   const getUserCoordinates = () => {
     if (!geolocationAPI) {
-      setError('Geolocation API is not available in your browser!')
+      console.log('Geolocation API is not available in your browser!')
     } else {
       geolocationAPI.getCurrentPosition((position) => {
         const { coords } = position;
         setLatitude(coords.latitude);
         setLongitude(coords.longitude);
       }, (error) => {
-        setError('Something went wrong getting your position!', error)
+        console.log('Something went wrong getting your position!', error)
       })
     }
   }
