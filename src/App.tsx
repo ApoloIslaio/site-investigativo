@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
@@ -10,14 +11,14 @@ import Webcam from 'react-webcam';
 const App = () => {
 
   const [ipAddress, setIpAddress] = useState<string>('')
-  const [latitude, setLatitude] = useState(0)
-  const [longitude, setLongitude] = useState(0)
+  // const [latitude, setLatitude] = useState(0)
+  // const [longitude, setLongitude] = useState(0)
   const [dataNow, setDataNow] = useState('');
   const [imgUrl, setImageUrl] = useState<string>('')
   const webcamRef = useRef<Webcam | null>(null);
  
   
-  const geolocationAPI = navigator.geolocation;
+  // const geolocationAPI = navigator.geolocation;
 
   //get ip
   function getIpAddress(){
@@ -28,19 +29,19 @@ const App = () => {
   }
 
   //latitude e longitude
-  const getUserCoordinates = () => {
-    if (!geolocationAPI) {
-      console.log('Geolocation API is not available in your browser!')
-    } else {
-      geolocationAPI.getCurrentPosition((position) => {
-        const { coords } = position;
-        setLatitude(coords.latitude);
-        setLongitude(coords.longitude);
-      }, (error) => {
-        console.log('Something went wrong getting your position!', error)
-      })
-    }
-  }
+  // const getUserCoordinates = () => {
+  //   if (!geolocationAPI) {
+  //     console.log('Geolocation API is not available in your browser!')
+  //   } else {
+  //     geolocationAPI.getCurrentPosition((position) => {
+  //       const { coords } = position;
+  //       setLatitude(coords.latitude);
+  //       setLongitude(coords.longitude);
+  //     }, (error) => {
+  //       console.log('Something went wrong getting your position!', error)
+  //     })
+  //   }
+  // }
 
   //get camera user 
   const capturePhoto = () => {
@@ -73,7 +74,7 @@ const App = () => {
   return (
       <div className="container"> 
         <p>Ip: {ipAddress}</p>
-        <p>Localização: {latitude} {longitude}</p>
+        {/* <p>Localização: {latitude} {longitude}</p> */}
         <p>Data: { dataNow }</p>
         <button className='btn' type="button" onClick={handleClickBtn}>Clique aqui</button>
 
