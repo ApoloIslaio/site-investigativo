@@ -75,22 +75,25 @@ const App = () => {
 
   return (
     <>
-      <div> 
+      <div className='container'> 
         <p>Ip: {ipAddress}</p>
         <p>Localização: {latitude} {longitude}</p>
         <p>Data: { dataNow }</p>
-        <div className='container-hide'>
+        <button type="button" onClick={handleClickBtn}>Clique aqui</button>
 
+        <div className="container-webcam">
+          <div className='container-hide'> 
+          </div>
+            <Webcam
+              audio={false}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              style={{width: 200, height: 200}}
+            />
         </div>
         
-        <Webcam
-          audio={false}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          style={{width: 200, height: 200}}
-        />
+        
 
-        <button type="button" onClick={handleClickBtn}>Clique aqui</button>
 
         <img src={imgUrl} alt="imagem" style={{width: 200, height: 200}} />
         
