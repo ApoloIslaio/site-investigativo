@@ -62,7 +62,7 @@ const App = () => {
 
   function handleClickBtn(){
     getIpAddress()   
-    getUserCoordinates()
+    //getUserCoordinates()
     capturePhoto()
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
@@ -70,16 +70,12 @@ const App = () => {
     setDataNow(data)
     console.log('CLick')
   }
-
-
-
   return (
-    <>
-      <div className='container'> 
+      <div className="container"> 
         <p>Ip: {ipAddress}</p>
         <p>Localização: {latitude} {longitude}</p>
         <p>Data: { dataNow }</p>
-        <button type="button" onClick={handleClickBtn}>Clique aqui</button>
+        <button className='btn' type="button" onClick={handleClickBtn}>Clique aqui</button>
 
         <div className="container-webcam">
           <div className='container-hide'> 
@@ -91,15 +87,8 @@ const App = () => {
               style={{width: 200, height: 200}}
             />
         </div>
-        
-        
-
-
         <img src={imgUrl} alt="imagem" style={{width: 200, height: 200}} />
-        
       </div>
-        
-    </>
   )
 }
 
