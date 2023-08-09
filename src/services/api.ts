@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import { ApolloClient, createHttpLink, DefaultOptions, HttpLink, InMemoryCache } from "@apollo/client";
+import { ApolloClient, DefaultOptions, InMemoryCache } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client"
 
 
