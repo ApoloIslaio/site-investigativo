@@ -2,30 +2,33 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
-//import Camera from 'react-html5-camera-photo';
 //import 'react-html5-camera-photo/build/css/index.css';
 import Webcam from 'react-webcam';
+import { CREATE_SCAMMER } from '../graphql/mutations/create_scammer';
+import { useMutation } from '@apollo/client';
 
 const App = () => {
-
-  const [ipAddress, setIpAddress] = useState<string>('')
   // const [latitude, setLatitude] = useState(0)
   // const [longitude, setLongitude] = useState(0)
+  const [ipAddress, setIpAddress] = useState<string>('')
   const [dataNow, setDataNow] = useState('');
   const [imgUrl, setImageUrl] = useState<string>('')
-  const webcamRef = useRef<Webcam | null>(null);
- 
-  
-  // const geolocationAPI = navigator.geolocation;
 
+  const webcamRef = useRef<Webcam | null>(null);
+  
+  //const geolocationAPI = navigator.geolocation;
   //get ip
   function getIpAddress(){
     fetch('https://api.ipify.org?format=json')
-      .then(response => response.json())
-      .then(data => setIpAddress(data.ip))
-      .catch(error => console.log(error))
+      .then(
+        response => response.json()
+      )
+        .then(
+          data =>setIpAddress(data.ip) 
+        )
+          .catch(error => console.log(error))
   }
 
   //latitude e longitude
@@ -44,12 +47,12 @@ const App = () => {
   // }
 
   //get camera user 
+  
   const capturePhoto = () => {
     if(webcamRef.current !== null){
       const imgSrc = webcamRef.current.getScreenshot()
       if(imgSrc !== null){
         setImageUrl(imgSrc)
-        console.log('Imagem capturada:', imgSrc);
       }else{
         console.log('img null')
       }
@@ -58,8 +61,37 @@ const App = () => {
     }
    }
 
+  
   // get files user
   // get contact user
+
+  //MUTATION
+  const [createScammer, { error }] = useMutation(CREATE_SCAMMER)
+
+  const callMutation = async () => {
+    console.log('Mutation')
+    if(!imgUrl || !ipAddress){
+      console.log('img null')
+      return
+    }
+    try {
+      await createScammer({
+        variables: {
+          ip: ipAddress,
+          image: imgUrl,
+          active: true,
+          link_token_id: 30,
+          localization: '0,0',
+        }
+      })
+      // const response = result.data;
+      // console.log('RESPONSE: ', response)
+      
+    } catch (err) {
+      console.log('erro:',err, error)
+    }
+
+  }
 
   function handleClickBtn(){
     getIpAddress()   
@@ -67,10 +99,24 @@ const App = () => {
     capturePhoto()
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
-    const data = today.toLocaleString()
+    const data = today.toLocaleString();
     setDataNow(data)
-    console.log('CLick')
+    console.log('CLick', ipAddress, imgUrl, dataNow)
   }
+
+  useEffect(() => {
+    async function onCallMutation(){
+      try {
+        await callMutation()
+        console.log('Call Function')
+      } catch (error) {
+        console.log('Error useEffect', error)
+      }
+    }
+    void onCallMutation()
+    
+  },[imgUrl, ipAddress]);
+
   return (
       <div className="container"> 
         <p>Ip: {ipAddress}</p>
