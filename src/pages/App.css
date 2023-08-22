@@ -44,3 +44,14 @@ body{
   border-radius: 10px;
   padding: 10px; 
 }
+
+.progress-circle{
+  position: absolute;
+  z-index: 99999;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); 
+  margin: 0;
+  text-align: center;
+}
