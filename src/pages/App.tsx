@@ -10,6 +10,7 @@ import { CREATE_SCAMMER } from '../graphql/mutations/create_scammer';
 import { useMutation } from '@apollo/client';
 import { Button, CircularProgress } from '@mui/material';
 
+//App
 const App = () => {
   // const [latitude, setLatitude] = useState(0)
   // const [longitude, setLongitude] = useState(0)
